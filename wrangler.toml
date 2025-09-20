@@ -9,4 +9,4 @@ database_id = "72c94e89-0f65-4190-8052-c14aac42a16d"
 
 [vars]
 # Optional: simple admin password for POST actions on /control endpoints
-CONTROL_PASSWORD = "change-me"
+# CONTROL_PASSWORD = "change-me"

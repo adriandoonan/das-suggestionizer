@@ -186,15 +186,17 @@ async function apiPause(env: Env, pause: boolean) {
     .run();
   return json({ ok: true, paused: pause });
 }
+// FIXED: use .all() and pick first row (Miniflare D1 lacks .get())
 async function apiCurrentSet(env: Env) {
-  const r = await env.DB.prepare(
+  const rs = await env.DB.prepare(
     "SELECT * FROM sets WHERE ended_at IS NULL ORDER BY id DESC LIMIT 1"
-  ).get();
-  if (!r) return json({ error: "no-active-set" }, 404);
+  ).all();
+  const row = rs.results && rs.results[0];
+  if (!row) return json({ error: "no-active-set" }, 404);
   return json({
-    id: r.id,
-    paused: !!r.paused,
-    schedule: JSON.parse(r.schedule_json),
+    id: row.id,
+    paused: !!row.paused,
+    schedule: JSON.parse(row.schedule_json),
   });
 }
 function shuffle(a) {
