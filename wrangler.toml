@@ -1,12 +1,9 @@
-name = "improv-suggestions"
-main = "src/worker.ts"
-compatibility_date = "2024-10-01"
 
-[[d1_databases]]
-binding = "DB"
-database_name = "improv_suggestions"
-database_id = "72c94e89-0f65-4190-8052-c14aac42a16d"
 
-[vars]
-# Optional: simple admin password for POST actions on /control endpoints
-# CONTROL_PASSWORD = "change-me"
+name = "suggestion-oneword"
+main = "src/worker.js"
+compatibility_date = "2025-09-01"
+
+d1_databases = [
+  { binding = "DB", database_name = "improv_suggestions", database_id = "72c94e89-0f65-4190-8052-c14aac42a16d" }
+]
