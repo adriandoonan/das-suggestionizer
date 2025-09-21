@@ -34,10 +34,10 @@ export function renderShowPage() {
   <header>
     <div class="row">
       <div class="muted">Set length:</div>
-      <input id="setLength" type="number" step="1" min="1" value="20" />
+      <input id="setLength" type="number" step="1" min="1" value="10" />
       <select id="setUnit" style="padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:#0f1115;color:var(--fg)">
-        <option value="minutes" selected>minutes</option>
-        <option value="seconds">seconds</option>
+        <option value="minutes">minutes</option>
+        <option value="seconds" selected>seconds</option>
       </select>
       <button class="btn danger" id="btnInit">Initialise</button>
       <button class="btn" id="btnStart">Start</button>
@@ -60,6 +60,11 @@ export function renderShowPage() {
   </footer>
 
 <script>
+
+const utterance = new SpeechSynthesisUtterance("Hello world!");
+const synth = window.speechSynthesis;
+
+
 let timer = null;
 let running = false;
 let paused = false;
@@ -74,6 +79,8 @@ const btnPause = document.getElementById('btnPause');
 const btnReset = document.getElementById('btnReset');
 const setLen = document.getElementById('setLength');
 const setUnit = document.getElementById('setUnit');
+
+const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;   
 
 btnInit.addEventListener('click', async () => {
   if (running) { alert('Stop the show before initialising.'); return; }
@@ -145,12 +152,18 @@ function nextTick() {
   if (index >= order.length) {
     stopShow();
     renderStack([], '(and that’s our show)');
+    utterance.text = "and that's our show";
+    utterance.voice = synth.getVoices()[getRandomInteger(0,175)]
+    synth.speak(utterance);
     status('Complete.');
     return;
   }
   const current = order[index];
   const history = order.slice(Math.max(0, index - 4), index).reverse(); // up to 4 trailing
   renderStack([current, ...history]);
+  utterance.text = current;
+  utterance.voice = synth.getVoices()[getRandomInteger(0,175)]
+  synth.speak(utterance);
 }
 
 function renderStack(wordsStack, emptyText) {
@@ -186,6 +199,7 @@ function stopShow() {
 
 function flashStage(msg){ stackEl.innerHTML = '<div class="muted">'+msg+'</div>'; }
 function status(t){ statusEl.textContent = t; }
+
 </script>
 </body></html>`;
 }
