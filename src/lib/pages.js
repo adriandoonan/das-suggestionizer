@@ -38,7 +38,7 @@ export function renderSubmitPage({ disabled, value, error, success }) {
     </form>
     <p style="margin-top:20px">
       <a href="/count" style="color:#8ab4f8">See live count →</a> ·
-      <a href="/show" style="color:#8ab4f8">Run show →</a>
+      
     </p>
   </div>
 </body></html>`;
@@ -62,7 +62,7 @@ export function renderCountPage() {
     <h1 style="margin-top:0;text-align:center">Suggestions in the database</h1>
     <div id="count" class="count">—</div>
     <div class="muted"><span id="status">Connecting…</span></div>
-    <p style="text-align:center;margin-top:16px"><a href="/show" style="color:#8ab4f8">Go to Show →</a></p>
+   
   </div>
 <script>
 const countEl = document.getElementById('count');
