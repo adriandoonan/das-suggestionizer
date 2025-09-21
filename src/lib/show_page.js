@@ -61,8 +61,7 @@ export function renderShowPage() {
 
 <script>
 
-const utterance = new SpeechSynthesisUtterance("Hello world!");
-const synth = window.speechSynthesis;
+
 
 
 let timer = null;
@@ -152,15 +151,20 @@ function nextTick() {
   if (index >= order.length) {
     stopShow();
     renderStack([], '(and that’s our show)');
-    utterance.text = "and that's our show";
-    utterance.voice = synth.getVoices()[getRandomInteger(0,175)]
-    synth.speak(utterance);
     status('Complete.');
+
+    const endUtterance = new SpeechSynthesisUtterance("Hello world!");
+    const endSynth = window.speechSynthesis;
+    endUtterance.text = "and that's our show!";
+    endUtterance.voice = endSynth.getVoices()[getRandomInteger(0,175)]
+    endSynth.speak(endUtterance);
     return;
   }
   const current = order[index];
   const history = order.slice(Math.max(0, index - 4), index).reverse(); // up to 4 trailing
   renderStack([current, ...history]);
+  const utterance = new SpeechSynthesisUtterance("Hello world!");
+const synth = window.speechSynthesis;
   utterance.text = current;
   utterance.voice = synth.getVoices()[getRandomInteger(0,175)]
   synth.speak(utterance);
